@@ -22,6 +22,7 @@ public class LogAnalyzer
 
     /**
      * Create an object to analyze hourly web accesses.
+     * @parameter allows you to create a logFile with a with unique assigned name.
      */
     public LogAnalyzer(String logFile)
     { 
