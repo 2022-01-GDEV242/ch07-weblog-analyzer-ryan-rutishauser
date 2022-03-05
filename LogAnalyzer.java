@@ -2,7 +2,7 @@ import java.util.Random;
 /**
  * Read web server data and analyse hourly access patterns.
  * 
- * @author David J. Barnes and Michael Kölling.
+ * @author Ryan Rutishauser.
  * @version    2022.03.05
  */
 public class LogAnalyzer
