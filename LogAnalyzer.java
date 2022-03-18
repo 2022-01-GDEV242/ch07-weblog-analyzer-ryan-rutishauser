@@ -51,11 +51,14 @@ public class LogAnalyzer
      */
     public void analyzeHourlyData()
     {
+        hourCounts = new int[24];
+        reader.reset();
         while(reader.hasNext()) {
             LogEntry entry = reader.next();
             int hour = entry.getHour();
             hourCounts[hour]++;
         }
+        
     }
     
     /**
@@ -63,6 +66,8 @@ public class LogAnalyzer
      */
     public void analyzeDailyData()
     {
+        dayCounts = new int[29];
+        reader.reset();
         while(reader.hasNext()) {
             LogEntry entry = reader.next();
             int day = entry.getDay();
@@ -75,6 +80,8 @@ public class LogAnalyzer
      */
     public void analyzeMonthlyData()
     {
+        monthCounts = new int[13];
+        reader.reset();
         while(reader.hasNext()) {
             LogEntry entry = reader.next();
             int month = entry.getMonth();
@@ -89,6 +96,7 @@ public class LogAnalyzer
      */
     public void printHourlyCounts()
     {
+        analyzeHourlyData();
         System.out.println("Hr: Count");
         int hour = 0;
         while(hour < hourCounts.length) {
@@ -104,6 +112,7 @@ public class LogAnalyzer
      */
     public void printDailyCounts()
     {
+        analyzeDailyData();
         System.out.println("Daily: Count");
         int day = 1;
         while(day < dayCounts.length) {
@@ -119,6 +128,7 @@ public class LogAnalyzer
      */
     public void totalAccessesPerMonth()
     {
+        analyzeMonthlyData();
         System.out.println("Month: Count");
         int month = 1;
         while(month < monthCounts.length) {
@@ -141,7 +151,7 @@ public class LogAnalyzer
     public int numberOfAccesses()
     {
         //iterate over all lines in the file and add 1 to count for each row.
-        
+        analyzeHourlyData();
         int count = 0;
         for(int k=0; k<hourCounts.length; k++) {
             count += hourCounts[k];
@@ -156,6 +166,7 @@ public class LogAnalyzer
     public int busiestHour()
     {
         //iterate over all lines in the file and add 1 to count for each row.
+        analyzeHourlyData();
         int hour = 0;
         int busiest = hourCounts[0];
         for(int k=0; k<hourCounts.length; k++) {
@@ -174,6 +185,7 @@ public class LogAnalyzer
     public int quietestHour()
     {
         //iterate over all lines in the file and add 1 to count for each row.
+        analyzeHourlyData();
         int hour = 0;
         int quietest = hourCounts[0];
         for(int k=0; k<hourCounts.length; k++) {
@@ -192,6 +204,7 @@ public class LogAnalyzer
     public int quietestDay()
     {
         //iterate over all lines in the file and add 1 to count for each row.
+        analyzeDailyData();
         int day = 1;
         int quietest = dayCounts[1];
         for(int k=1; k<dayCounts.length; k++) {
@@ -210,6 +223,7 @@ public class LogAnalyzer
     public int busiestDay()
     {
         //iterate over all lines in the file and add 1 to count for each row.
+        analyzeDailyData();
         int day = 1;
         int busiest = dayCounts[1];
         for(int k=1; k<dayCounts.length; k++) {
@@ -228,6 +242,7 @@ public class LogAnalyzer
     public int quietestMonth()
     {
         //iterate over all lines in the file and add 1 to count for each row.
+        analyzeMonthlyData();
         int month = 1;
         int quietest = monthCounts[1];
         for(int k=1; k<monthCounts.length; k++) {
@@ -246,6 +261,7 @@ public class LogAnalyzer
     public int busiestMonth()
     {
         //iterate over all lines in the file and add 1 to count for each row.
+        analyzeMonthlyData();
         int month = 1;
         int busiest = monthCounts[1];
         for(int k=1; k<monthCounts.length; k++) {
@@ -264,9 +280,10 @@ public class LogAnalyzer
     public int busiestTwoHour()
     {
         //iterate over all lines in the file and add 1 to count for each row.
+        analyzeHourlyData();
         int hour = 0;
         int busiest = hourCounts[0];
-        for(int k=0; k<hourCounts.length; k++) {
+        for(int k=0; k<hourCounts.length-1; k++) {
         if((hourCounts[k] + hourCounts[k+1]) > busiest){
             busiest = (hourCounts[k] + hourCounts[k+1]);
             hour = k;
@@ -282,6 +299,7 @@ public class LogAnalyzer
     public double averageAccessesPerMonth()
     {
         //iterate over all lines in the file and add 1 to count for each row.
+        analyzeMonthlyData();
         int total = 0;
         double average = 0;
         for(int k=0; k<monthCounts.length; k++) {
